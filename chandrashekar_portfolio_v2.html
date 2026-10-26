@@ -1,0 +1,2296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandrashekar — Lead Designer. I make complicated things look simple.</title>
+<meta name="description" content="Chandrashekar, Lead Designer — 8 years across brand, campaigns, digital, motion and AI-assisted creative.">
+
+<meta property="og:title" content="Chandrashekar — Lead Designer">
+<meta property="og:description" content="I make complicated things look simple. Brand, campaigns, digital, motion and AI-assisted creative.">
+<meta property="og:type" content="website">
+
+<style>
+/* ==========================================================
+   THE DESIGN INTERVIEW — Chandrashekar
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  /* -- palette -- */
+  --paper:      #F5F4EF;
+  --paper-deep: #E9E6DE;
+  --ink:        #17160F;
+  --ink-70:     rgba(23,22,15,.7);
+  --ink-45:     rgba(23,22,15,.45);
+  --line:       #D8D4C6;
+  --line-strong:#B9B4A2;
+  --accent:     #2563EB;
+  --accent-ink: #FFFFFF;
+
+  /* -- type -- */
+  --serif: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --sans:  'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* -- scale -- */
+  --step--1: clamp(.8125rem, .78rem + .15vw, .875rem);
+  --step-0:  clamp(1rem, .96rem + .2vw, 1.0625rem);
+  --step-1:  clamp(1.25rem, 1.15rem + .5vw, 1.5rem);
+  --step-2:  clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
+  --step-3:  clamp(2.5rem, 2rem + 2vw, 3.75rem);
+  --step-4:  clamp(3.25rem, 2.4rem + 3.5vw, 5.5rem);
+
+  --edge: clamp(1.25rem, 4vw, 4rem);
+  --maxw: 1240px;
+
+  --dur-s: 180ms;
+  --dur-m: 420ms;
+  --dur-l: 900ms;
+  --ease: cubic-bezier(.16,.8,.24,1);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body.lock{ overflow: hidden; }
+
+img{ max-width:100%; display:block; }
+a{ color: inherit; text-decoration: none; }
+button{ font-family: inherit; cursor: pointer; }
+
+::selection{ background: var(--accent); color: var(--accent-ink); }
+
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.wrap{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--edge);
+}
+
+.eyebrow{
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  letter-spacing: .04em;
+  color: var(--ink-45);
+  font-weight: 500;
+}
+
+.serif{ font-family: var(--serif); }
+
+/* ==========================================================
+   LOADER
+   ========================================================== */
+#loader{
+  position: fixed; inset: 0; z-index: 300;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  padding: var(--edge);
+  transition: opacity var(--dur-l) var(--ease), visibility var(--dur-l) var(--ease);
+}
+#loader.hidden{ opacity: 0; visibility: hidden; pointer-events: none; }
+#loader .loader-line{
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  color: rgba(245,244,239,.6);
+  margin: 0 0 1rem;
+  min-height: 1.2em;
+}
+#loader .loader-bar{
+  width: min(320px, 60vw);
+  height: 2px;
+  background: rgba(245,244,239,.18);
+  position: relative;
+  overflow: hidden;
+}
+#loader .loader-bar::after{
+  content:"";
+  position: absolute; left:0; top:0; bottom:0;
+  width: 40%;
+  background: var(--accent);
+  animation: loaderMove 1.1s var(--ease) infinite;
+}
+@keyframes loaderMove{
+  0%{ left:-40%; }
+  100%{ left:100%; }
+}
+
+/* ==========================================================
+   NAV
+   ========================================================== */
+#site-nav{
+  position: fixed; top:0; left:0; right:0; z-index: 100;
+  background: rgba(245,244,239,.86);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-m) var(--ease), transform var(--dur-m) var(--ease);
+}
+#site-nav.scrolled{ border-bottom-color: var(--line); }
+.nav-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 1.1rem var(--edge);
+}
+.nav-mark{
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.nav-links{
+  display:flex; gap: clamp(1.25rem, 3vw, 2.25rem);
+  align-items:center;
+}
+.nav-links a{
+  font-size: var(--step--1);
+  color: var(--ink-70);
+  transition: color var(--dur-s) var(--ease);
+  position: relative;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute; left:0; right:100%; bottom:-4px;
+  height:1px; background: var(--ink);
+  transition: right var(--dur-m) var(--ease);
+}
+.nav-links a:hover, .nav-links a:focus-visible{ color: var(--ink); }
+.nav-links a:hover::after, .nav-links a:focus-visible::after{ right:0; }
+
+/* progress rail — desktop only */
+#progress-rail{
+  position: fixed;
+  right: clamp(.75rem, 2vw, 1.75rem);
+  top: 50%; transform: translateY(-50%);
+  z-index: 90;
+  display: flex; flex-direction: column; gap: 1.1rem;
+}
+.progress-item{
+  display:flex; align-items:center; gap:.6rem;
+  cursor:pointer; background:none; border:none; padding:0;
+  color: var(--ink-45);
+}
+.progress-item .dot{
+  width:6px; height:6px; border-radius:50%;
+  background: var(--line-strong);
+  transition: background var(--dur-s) var(--ease), transform var(--dur-s) var(--ease);
+}
+.progress-item .label{
+  font-size: .6875rem; letter-spacing:.06em;
+  font-weight:600;
+  max-width:0; overflow:hidden; white-space:nowrap;
+  opacity:0; transition: max-width var(--dur-m) var(--ease), opacity var(--dur-s) var(--ease);
+}
+.progress-item:hover .label{ max-width: 140px; opacity:1; }
+.progress-item.active .dot{ background: var(--accent); transform: scale(1.5); }
+.progress-item.active{ color: var(--ink); }
+@media (max-width: 900px){ #progress-rail{ display:none; } }
+
+/* ==========================================================
+   SECTION SHELL
+   ========================================================== */
+section{
+  position: relative;
+  padding: clamp(5rem, 10vw, 8.5rem) 0;
+}
+.section-tight{ padding: clamp(3.5rem, 7vw, 6rem) 0; }
+.divider{
+  border:none; border-top: 1px solid var(--line);
+  margin:0;
+}
+.deep{ background: var(--paper-deep); }
+
+/* interview Q/A block, reused everywhere */
+.qa{
+  max-width: 720px;
+}
+.qa .q{
+  display:flex; gap: .75rem; align-items:flex-start;
+  margin-bottom: 1.1rem;
+}
+.qa .q .who{
+  font-size: var(--step--1);
+  color: var(--ink-45);
+  padding-top: .35em;
+  white-space: nowrap;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.qa .q .line{
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.25;
+}
+.qa .a{
+  display:flex; gap:.75rem; align-items:flex-start;
+}
+.qa .a .who{
+  font-size: var(--step--1);
+  color: var(--accent);
+  padding-top: .35em;
+  white-space:nowrap;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+.qa .a .line{
+  font-size: var(--step-1);
+  line-height: 1.45;
+  max-width: 34ch;
+}
+.qa .a .line small,
+.small-note{
+  display:block;
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  color: var(--ink-45);
+  font-weight: 400;
+  margin-top:.6rem;
+}
+
+.typed::after{
+  content:"";
+  display:inline-block;
+  width: .09em; height: .9em;
+  background: currentColor;
+  margin-left: .08em;
+  vertical-align: -0.05em;
+  animation: caret 1s steps(1) infinite;
+}
+.typed.done::after{ display:none; }
+@keyframes caret{ 50%{ opacity:0; } }
+
+.cta{
+  display:inline-flex; align-items:center; gap:.5rem;
+  margin-top: 2.25rem;
+  font-size: var(--step--1);
+  font-weight:600; letter-spacing:.02em;
+  padding: .95rem 1.6rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  transition: background var(--dur-s) var(--ease), color var(--dur-s) var(--ease), transform var(--dur-s) var(--ease), border-color var(--dur-s) var(--ease);
+}
+.cta:hover, .cta:focus-visible{
+  background: transparent;
+  color: var(--ink);
+}
+.cta.ghost{
+  background: transparent;
+  color: var(--ink);
+}
+.cta.ghost:hover, .cta.ghost:focus-visible{
+  background: var(--ink);
+  color: var(--paper);
+}
+.cta:active{ transform: translateY(1px); }
+
+/* ==========================================================
+   INTRO
+   ========================================================== */
+#intro{
+  min-height: 100svh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding-top: clamp(6rem,12vw,9rem);
+}
+.intro-line{
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  letter-spacing:.04em;
+  color: var(--ink-45);
+  margin: 0 0 .5rem;
+}
+.intro-headline{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--step-4);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.intro-headline .flip{
+  font-style: italic;
+  color: var(--accent);
+}
+.intro-sub{
+  margin-top: 2.25rem;
+  max-width: 30ch;
+}
+.intro-name{
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  margin: 0 0 .2rem;
+}
+.intro-role{
+  color: var(--ink-70);
+  font-size: var(--step-0);
+}
+.intro-meta{
+  font-size: var(--step--1);
+  color: var(--ink-45);
+  margin-top: .45rem;
+}
+.intro-foot{
+  margin-top: 2.5rem;
+  font-size: var(--step--1);
+  color: var(--ink-45);
+  font-style: italic;
+}
+.scroll-cue{
+  position:absolute; left: var(--edge); bottom: 2.25rem;
+  display:flex; align-items:center; gap: .6rem;
+  font-size: .6875rem; letter-spacing:.06em; color: var(--ink-45);
+}
+.scroll-cue .stem{
+  width:1px; height:34px; background: var(--line-strong);
+  position: relative; overflow:hidden;
+}
+.scroll-cue .stem::after{
+  content:""; position:absolute; left:0; top:-100%; width:100%; height:100%;
+  background: var(--accent);
+  animation: stemDrop 1.8s var(--ease) infinite;
+}
+@keyframes stemDrop{
+  0%{ top:-100%; } 60%{ top:100%; } 100%{ top:100%; }
+}
+
+/* ==========================================================
+   GENERIC TWO-COL Q/CONTENT LAYOUT
+   ========================================================== */
+.qa-section .wrap{
+  display:grid;
+  grid-template-columns: minmax(0,1fr);
+  gap: 3rem;
+}
+.qa-cluster + .qa-cluster{ margin-top: 3rem; }
+
+/* ==========================================================
+   WORK — ACT 2
+   ========================================================== */
+.category-block{ padding: clamp(4rem,8vw,6.5rem) 0; }
+.category-block + .category-block{ border-top: 1px solid var(--line); }
+.category-head{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.category-head .q{
+  font-family: var(--serif); font-style: italic; font-weight:400;
+  font-size: var(--step-3);
+  line-height:1.08;
+  max-width: 14ch;
+}
+.category-head .sub{
+  max-width: 32ch;
+  color: var(--ink-70);
+  font-size: var(--step-0);
+}
+.category-tag{
+  display:inline-block;
+  font-size: var(--step--1);
+  color: var(--accent);
+  font-weight:600;
+  letter-spacing:.03em;
+  margin-bottom:.75rem;
+}
+
+.project-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+@media (max-width: 720px){
+  .project-grid{ grid-template-columns: 1fr; }
+}
+
+.project-card{
+  cursor: pointer;
+}
+.project-figure{
+  aspect-ratio: 4/3;
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.project-figure img{
+  width:100%; height:100%; object-fit: cover;
+  clip-path: inset(0 0 0 0);
+}
+.project-figure .ph{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.5rem; text-align:center; padding: 1.5rem;
+  border: 1px dashed var(--line-strong);
+  margin: 10px;
+}
+.project-figure .ph .ph-label{
+  font-size: .6875rem; letter-spacing:.06em; color: var(--ink-45);
+  font-weight:600;
+}
+.project-figure .ph .ph-path{
+  font-family: monospace, monospace;
+  font-size: .6875rem; color: var(--ink-45);
+  word-break: break-all;
+}
+.project-figure .hover-note{
+  position:absolute; right: .85rem; bottom: .85rem;
+  background: var(--ink); color: var(--paper);
+  font-size: .6875rem; letter-spacing:.03em; font-weight:600;
+  padding: .4rem .7rem;
+  opacity:0; transform: translateY(6px);
+  transition: opacity var(--dur-s) var(--ease), transform var(--dur-s) var(--ease);
+}
+.project-card:hover .hover-note{ opacity:1; transform: translateY(0); }
+.project-card:hover .project-figure img{ transform: scale(1.02); }
+.project-figure img{ transition: transform var(--dur-l) var(--ease); }
+
+.project-meta{
+  margin-top: 1.1rem;
+  display:flex; justify-content:space-between; align-items:baseline; gap:1rem;
+}
+.project-meta .name{
+  font-family: var(--serif); font-size: var(--step-1);
+}
+.project-meta .yr{
+  font-size: var(--step--1); color: var(--ink-45);
+}
+.project-desc{
+  margin-top:.35rem;
+  color: var(--ink-70);
+  font-size: var(--step--1);
+  max-width: 46ch;
+}
+
+/* project detail (expanded) */
+.project-detail{
+  display:none;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+.project-detail.open{ display:block; }
+.detail-q{
+  font-family: var(--serif); font-style:italic; font-size: var(--step-1);
+  color: var(--ink-70); margin-bottom: 1.5rem;
+}
+.detail-grid{
+  display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem;
+  margin-bottom: 2.25rem;
+}
+@media (max-width: 720px){ .detail-grid{ grid-template-columns:1fr; } }
+.detail-field .label{
+  font-size: .6875rem; letter-spacing:.08em; color: var(--ink-45); font-weight:600; margin-bottom:.4rem;
+}
+.detail-field .value{ font-size: var(--step--1); color: var(--ink); }
+.detail-field .value em{ color: var(--ink-45); font-style: normal; }
+.detail-gallery{
+  display:grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem;
+}
+.detail-gallery .project-figure{ aspect-ratio: 3/2; }
+
+.scroll-nudge{
+  font-family: var(--serif); font-style: italic;
+  font-size: var(--step-0);
+  color: var(--ink-45);
+  text-align: right;
+  margin-top: 3rem;
+  line-height: 1.4;
+}
+
+/* selected work strip */
+#selected-work .wrap{ padding-top: clamp(4rem,8vw,6.5rem); }
+.selected-grid{
+  display:grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+@media (max-width: 900px){ .selected-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 480px){ .selected-grid{ grid-template-columns: 1fr; } }
+.selected-grid .project-figure{ aspect-ratio: 1/1; }
+.selected-grid .project-meta .name{ font-size: var(--step-0); }
+
+/* ==========================================================
+   PERSONALITY — ACT 3
+   ========================================================== */
+#personality{ background: var(--ink); color: var(--paper); }
+#personality .eyebrow{ color: rgba(245,244,239,.5); }
+.quip-grid{
+  display:grid; grid-template-columns: repeat(3,1fr); gap: 3rem;
+  margin-top: 3rem;
+}
+@media (max-width: 900px){ .quip-grid{ grid-template-columns:1fr; gap: 3.5rem; } }
+.quip .q{
+  font-family: var(--serif); font-style: italic; font-size: var(--step-1);
+  color: rgba(245,244,239,.6);
+  margin-bottom: 1rem;
+}
+.quip .exchange{ display:flex; flex-direction:column; gap:.5rem; }
+.quip .line{
+  display:flex; gap:.6rem;
+}
+.quip .line .who{
+  font-size: .6875rem; letter-spacing:.04em; font-weight:600;
+  color: var(--accent);
+  padding-top:.3em; white-space:nowrap;
+}
+.quip .line.interviewer .who{ color: rgba(245,244,239,.4); }
+.quip .line .txt{
+  font-family: var(--serif); font-size: var(--step-1);
+}
+.quip .note{
+  margin-top:.75rem; font-size: var(--step--1); color: rgba(245,244,239,.5); font-style: italic;
+}
+
+/* ==========================================================
+   ABOUT
+   ========================================================== */
+#about .wrap{
+  display:grid; grid-template-columns: 1.1fr .9fr; gap: 4rem;
+}
+@media (max-width: 800px){ #about .wrap{ grid-template-columns: 1fr; gap:2.5rem; } }
+#about .statement{
+  font-family: var(--serif); font-size: var(--step-2); line-height:1.2;
+}
+.about-list{ list-style:none; margin:0; padding:0; }
+.about-list li{
+  display:flex; justify-content:space-between; gap:1rem;
+  padding: .95rem 0;
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+}
+.about-list li:last-child{ border-bottom: 1px solid var(--line); }
+.about-list li span:first-child{ color: var(--ink-45); }
+
+/* ==========================================================
+   AI — ACT 4
+   ========================================================== */
+#ai{ background: var(--paper-deep); }
+.ai-exchange{ max-width: 640px; }
+.ai-exchange .qa + .qa{ margin-top: 1.75rem; }
+
+/* ==========================================================
+   NERVOUS — ACT 5
+   ========================================================== */
+#nervous{ text-align: left; }
+#nervous .fourth-wall{
+  font-family: var(--serif); font-style: italic; font-size: var(--step-3);
+  line-height: 1.12; max-width: 16ch; margin: 1.5rem 0 2.5rem;
+}
+.dual-cta{ display:flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ==========================================================
+   HIRE — ACT 6
+   ========================================================== */
+#hire{ background: var(--ink); color: var(--paper); }
+#hire .eyebrow{ color: rgba(245,244,239,.5); }
+#hire .qa .a .line{ color: var(--paper); max-width: 30ch; }
+#hire .qa .q .line{ color: var(--paper); }
+#hire .qa .q .who{ color: rgba(245,244,239,.4); }
+.cap-list{
+  margin-top: 4rem;
+  border-top: 1px solid rgba(245,244,239,.18);
+}
+.cap-row{
+  display:flex; justify-content: space-between; align-items:baseline;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid rgba(245,244,239,.18);
+}
+.cap-row .yrs{
+  font-family: var(--serif); font-size: var(--step-2);
+}
+.cap-row .items{
+  display:flex; gap: clamp(1rem,3vw,2.5rem); flex-wrap:wrap;
+  font-size: var(--step--1); color: rgba(245,244,239,.6);
+}
+
+/* ==========================================================
+   ENDING
+   ========================================================== */
+#ending{ text-align:left; }
+.ending-title{
+  font-family: var(--serif); font-size: var(--step-3);
+  margin: 0 0 .5rem;
+}
+.ending-sub{ color: var(--ink-70); }
+.ending-note{
+  font-style: italic; color: var(--ink-45); margin-top: .5rem;
+}
+.ending-ctas{ display:flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+.ending-contact{
+  margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--line);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap: 1rem;
+  font-size: var(--step--1); color: var(--ink-70);
+}
+.ending-contact a{ color: var(--ink); font-weight:600; }
+.ending-contact a:hover{ color: var(--accent); }
+
+footer{
+  padding: 2.5rem var(--edge);
+  border-top: 1px solid var(--line);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
+  font-size: var(--step--1); color: var(--ink-45);
+}
+
+/* ==========================================================
+   REVEAL ON SCROLL — one deliberate treatment, reused
+   ========================================================== */
+.reveal{
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--dur-l) var(--ease);
+}
+.reveal.in{ clip-path: inset(0 0 0% 0); }
+.fade{
+  opacity: 0;
+  transition: opacity var(--dur-l) var(--ease);
+}
+.fade.in{ opacity: 1; }
+
+/* ==========================================================
+   EASTER EGGS
+   ========================================================== */
+#cursor-note{
+  position: fixed; z-index: 250; pointer-events:none;
+  background: var(--ink); color: var(--paper);
+  font-size: .6875rem; letter-spacing:.02em; font-weight:600;
+  padding: .4rem .65rem;
+  transform: translate(-50%, -140%);
+  opacity: 0; transition: opacity var(--dur-s) var(--ease);
+  white-space: nowrap;
+}
+#cursor-note.show{ opacity: 1; }
+
+#toast{
+  position: fixed; left:50%; bottom: 2rem; z-index: 260;
+  transform: translate(-50%, 20px);
+  background: var(--ink); color: var(--paper);
+  font-size: var(--step--1); font-weight:500;
+  padding: .85rem 1.4rem;
+  opacity:0; transition: opacity var(--dur-m) var(--ease), transform var(--dur-m) var(--ease);
+  pointer-events:none;
+}
+#toast.show{ opacity:1; transform: translate(-50%, 0); }
+
+@media (max-width: 480px){
+  .nav-links{ gap: 1rem; }
+  .nav-mark{ font-size: .95rem; }
+}
+
+
+/* ==========================================================
+   V9 — CLEAN BLUE MOTION SYSTEM
+   ========================================================== */
+:root{
+  --blue-soft:#E7EEFF;
+  --blue-mid:#7EA5FF;
+  --blue-dark:#1747B8;
+  --shadow-blue:rgba(37,99,235,.16);
+}
+
+/* cleaner typography hierarchy */
+.serif{font-family:var(--serif);letter-spacing:-.045em}
+.intro-headline,.ending-title,.category-head .q,.quip .q,.quip .line .txt{
+  font-family:var(--sans);
+  letter-spacing:-.05em;
+}
+.intro-headline{font-weight:700;line-height:1.02}
+.intro-headline .flip{font-style:normal;color:var(--accent)}
+.intro-name{font-family:var(--sans);font-weight:700;letter-spacing:-.035em}
+
+/* hero: blue cursor + status system */
+#intro{position:relative;overflow:clip}
+#intro::before{
+  content:"";
+  position:absolute;right:8vw;top:20%;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px);
+  border:1px solid var(--blue-mid);border-radius:50%;opacity:.35;
+  animation:orbitPulse 5s ease-in-out infinite;
+}
+#intro::after{
+  content:"";
+  position:absolute;right:calc(8vw + 48px);top:calc(20% + 48px);
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 9px var(--shadow-blue);
+  animation:orbitDot 5s ease-in-out infinite;
+}
+@keyframes orbitPulse{50%{transform:scale(1.12);opacity:.18}100%{transform:scale(1);opacity:.35}}
+@keyframes orbitDot{50%{transform:translate(35px,18px)}100%{transform:translate(0,0)}}
+
+.intro-line{display:flex;align-items:center;gap:10px}
+.intro-line::before{content:"";width:28px;height:1px;background:var(--accent)}
+.intro-sub{padding-left:0}
+.intro-foot{font-style:normal}
+.intro-foot::before{content:"↳ ";color:var(--accent)}
+
+/* smoother reveal: text lifts rather than gets chopped by a clip-path */
+.reveal{clip-path:none!important;opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* CTAs feel tactile */
+.cta{position:relative;overflow:hidden;isolation:isolate}
+.cta::before{
+  content:"";position:absolute;inset:0;background:var(--accent);
+  transform:translateX(-102%);transition:transform .45s var(--ease);z-index:-1;
+}
+.cta:hover::before{transform:translateX(0)}
+.cta:hover{border-color:var(--accent);transform:translateY(-2px)}
+.cta.ghost{background:transparent;color:var(--ink)}
+.cta.ghost:hover{color:#fff}
+
+/* category/work cards */
+.category-block{position:relative}
+.category-block::before{
+  content:"";position:absolute;right:var(--edge);top:clamp(3rem,6vw,5rem);
+  width:5px;height:5px;background:var(--accent);border-radius:50%;
+}
+.category-head .q{font-style:normal;font-weight:650}
+.category-tag{color:var(--accent)}
+.project-card{position:relative}
+.project-figure{border-color:#d2d1ca;box-shadow:0 0 0 0 transparent;transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
+.project-card:hover .project-figure{transform:translateY(-5px);box-shadow:12px 14px 0 var(--blue-soft)}
+.project-card:hover .project-figure img{transform:scale(1.045)}
+.project-figure .hover-note{background:var(--accent);color:#fff;border-radius:999px;padding:.45rem .8rem}
+
+/* selected archive */
+.selected-grid .project-card{transition:transform .45s var(--ease)}
+.selected-grid .project-card:hover{transform:translateY(-7px)}
+.project-meta .name{font-family:var(--sans);font-weight:650;letter-spacing:-.03em}
+
+/* personality cards become little "interview cards" */
+.quip-grid{gap:1.5rem}
+.quip{
+  border:1px solid var(--line);padding:1.5rem;background:rgba(255,255,255,.28);
+  transition:transform .45s var(--ease),background .45s var(--ease),border-color .45s var(--ease);
+}
+.quip:hover{transform:translateY(-7px) rotate(-.4deg);background:#fff;border-color:var(--blue-mid)}
+.quip .q{color:var(--ink);font-style:normal;font-weight:600}
+.quip .line .who{color:var(--accent)}
+.quip .note{font-style:normal}
+
+/* About: tiny blue signal */
+#about .statement{font-family:var(--sans);font-weight:600;letter-spacing:-.045em}
+.about-list li{transition:padding-left .3s var(--ease),background .3s var(--ease)}
+.about-list li:hover{padding-left:10px;background:var(--blue-soft)}
+.about-list li span:first-child{color:var(--accent)}
+
+/* AI section */
+#ai{position:relative}
+#ai::before{
+  content:"AI ≠ MAGIC";position:absolute;right:var(--edge);top:3rem;
+  font:500 .625rem/1 DM Mono,monospace;color:var(--blue-dark);letter-spacing:.08em;
+}
+.ai-exchange .qa .a .who{color:var(--accent)}
+
+/* capability area */
+#hire{background:var(--ink)}
+#hire::before{
+  content:"";display:block;position:absolute;
+}
+.cap-row .items span{position:relative}
+.cap-row .items span::before{content:"•";color:var(--accent);margin-right:.45rem}
+
+/* ending */
+.ending-title{font-weight:700}
+.ending-title::after{
+  content:"";display:inline-block;width:.55em;height:.08em;background:var(--accent);
+  margin-left:.15em;vertical-align:.18em;animation:endingBlink 1.3s steps(2) infinite;
+}
+@keyframes endingBlink{50%{opacity:.2}}
+.ending-contact a:hover{color:var(--accent)}
+
+/* floating designer notes */
+#cursor-note{
+  background:var(--accent)!important;color:#fff!important;border-radius:999px;
+  box-shadow:5px 6px 0 var(--blue-soft);
+  padding:.45rem .8rem!important;
+}
+#toast{border-left:3px solid var(--accent)}
+
+/* responsive */
+@media(max-width:700px){
+  #intro::before,#intro::after{display:none}
+  .category-block::before{right:var(--edge)}
+}
+
+#progress-rail{--scroll-progress:0%}
+#progress-rail::before{
+  content:"";position:absolute;right:3px;top:0;height:100%;
+  width:1px;background:linear-gradient(to bottom,var(--accent) var(--scroll-progress),transparent var(--scroll-progress));
+  opacity:.22;pointer-events:none;
+}
+.project-figure{transform:translateY(12px);opacity:.92}
+.project-figure.figure-in{transform:none;opacity:1;transition:transform .9s var(--ease),opacity .9s var(--ease),box-shadow .55s var(--ease)}
+
+.progress-item .dot{transition:transform .3s var(--ease),background .3s var(--ease)}
+.progress-item:hover .dot{transform:scale(1.6);background:var(--accent)}
+.progress-item .label{transition:color .25s ease}
+.progress-item:hover .label{color:var(--accent)}
+
+.blue-note{color:var(--accent);font-style:normal}
+
+/* ==========================================================
+   V9 BUILD — TOOLKIT + QUIET FUN
+   ========================================================== */
+.toolkit-section{ background: var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.toolkit-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; margin-bottom:2.5rem; }
+.toolkit-title{ margin:.5rem 0 0; font-family:var(--sans); font-size:clamp(2rem,3.8vw,4rem); line-height:1.04; font-weight:600; letter-spacing:-.035em; max-width:14ch; }
+.toolkit-status{ font-family:'DM Mono',monospace; font-size:.72rem; color:var(--ink-45); white-space:nowrap; padding-bottom:.25rem; }
+.status-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--accent); margin-right:.5rem; box-shadow:0 0 0 4px rgba(37,99,235,.10); }
+.tool-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+.tool-card{ min-height:150px; padding:1.35rem; border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-direction:column; justify-content:space-between; gap:1rem; background:rgba(245,244,239,.45); transition:transform var(--dur-m) var(--ease), background var(--dur-m) var(--ease), box-shadow var(--dur-m) var(--ease); position:relative; overflow:hidden; }
+.tool-card::after{ content:'↗'; position:absolute; right:1rem; top:1rem; font-family:'DM Mono',monospace; color:var(--ink-45); opacity:0; transform:translate(-5px,5px); transition:opacity var(--dur-s) var(--ease), transform var(--dur-s) var(--ease); }
+.tool-card:hover{ transform:translateY(-5px); background:var(--paper); box-shadow:0 14px 30px rgba(23,22,15,.07); }
+.tool-card:hover::after{ opacity:1; transform:none; }
+.tool-index{ font-family:'DM Mono',monospace; font-size:.66rem; color:var(--accent); letter-spacing:.04em; }
+.tool-card strong{ font-size:1.1rem; font-weight:600; letter-spacing:-.02em; }
+.tool-note{ font-size:.78rem; line-height:1.4; color:var(--ink-45); max-width:30ch; }
+.ai-tool strong::after{ content:' AI'; font-family:'DM Mono',monospace; font-size:.58rem; color:var(--accent); vertical-align:top; margin-left:.25rem; letter-spacing:.04em; }
+.code-tool{ background:rgba(37,99,235,.045); }
+.toolkit-footnote{ display:flex; justify-content:space-between; gap:2rem; padding-top:1.2rem; font-family:'DM Mono',monospace; font-size:.68rem; color:var(--ink-45); }
+.toolkit-footnote b{ color:var(--ink); font-weight:500; }
+.toolkit-micro{ text-align:right; }
+@media (max-width:900px){ .toolkit-head{ align-items:flex-start; flex-direction:column; } .tool-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } .toolkit-footnote{ flex-direction:column; gap:.5rem; } .toolkit-micro{text-align:left;} }
+@media (max-width:560px){ .tool-grid{ grid-template-columns:1fr; } .tool-card{ min-height:125px; } .toolkit-status{ white-space:normal; } }
+
+/* Tiny interview-room details: visible enough to smile, restrained enough to hire. */
+#hire::before{ content:'FINAL REVIEW / NO FURTHER CHANGES'; position:absolute; top:1.75rem; right:var(--edge); font-family:'DM Mono',monospace; font-size:.58rem; color:var(--ink-45); letter-spacing:.06em; transform:rotate(-2deg); opacity:.7; }
+#ending .ending-note::after{ content:'  [yes, this is the final-final version]'; font-family:'DM Mono',monospace; font-size:.62em; color:var(--accent); font-style:normal; }
+
+/* ==========================================================
+   V12 — PROJECT MEDIA + HR QUESTION CARDS
+   ========================================================== */
+.project-figure{overflow:hidden;position:relative;aspect-ratio:16/10;background:#e8e7e1}
+.project-figure img,.project-figure video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
+.project-figure.has-video{background:#111}
+.project-figure.has-video video{object-fit:cover}
+.project-card:hover .project-figure video{transform:scale(1.02)}
+.project-figure video::-webkit-media-controls-panel{background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.hr-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:2.5rem}
+.hr-title{font-family:var(--sans);font-size:clamp(2.4rem,5vw,5.5rem);line-height:.98;letter-spacing:-.055em;font-weight:650;max-width:11ch;margin:.45rem 0 0}
+.hr-meta{display:flex;align-items:center;gap:1rem;font-family:'DM Mono',monospace;font-size:.62rem;color:rgba(245,244,239,.45);white-space:nowrap;padding-bottom:.35rem}
+.hr-approved{border:1px solid rgba(245,244,239,.25);padding:.35rem .55rem;transform:rotate(-2deg);color:var(--accent)}
+.quip-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(245,244,239,.18);border:1px solid rgba(245,244,239,.18)}
+.quip{min-height:410px;border:0!important;border-radius:0!important;padding:1.5rem;background:var(--paper);color:var(--ink);position:relative;display:flex;flex-direction:column;transition:transform .45s var(--ease),background .45s var(--ease)}
+.quip:hover{transform:none;background:#fff}
+.quip-top{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--accent);padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
+.quip .q{font-family:var(--sans);font-size:clamp(1.35rem,2vw,2rem);line-height:1.08;letter-spacing:-.035em;margin:2rem 0 2.2rem;max-width:13ch}
+.quip .exchange{gap:.8rem}
+.quip .line{align-items:flex-start;gap:.75rem}
+.quip .line .who{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.05em;min-width:6.5rem;padding-top:.25rem}
+.quip .line .txt{font-family:var(--sans);font-size:.95rem;line-height:1.35;font-weight:550}
+.quip .line.interviewer .txt{font-style:italic;opacity:.48}
+.quip .note{margin-top:auto;padding-top:2rem;font-family:'DM Mono',monospace;font-size:.64rem;color:var(--ink-45)}
+.quip-stamp{position:absolute;right:1.2rem;bottom:1.2rem;border:1px solid var(--blue-mid);color:var(--accent);font-family:'DM Mono',monospace;font-size:.55rem;padding:.35rem .5rem;transform:rotate(-5deg);opacity:.75}
+.hr-footnote{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(245,244,239,.35);margin-top:1rem}
+.ending-contact{flex-wrap:wrap}
+@media(max-width:900px){.hr-heading{align-items:flex-start;flex-direction:column}.quip-grid{grid-template-columns:1fr;gap:1px}.quip{min-height:330px}}
+@media(max-width:560px){.hr-title{font-size:2.7rem}.hr-meta{flex-wrap:wrap}.quip{min-height:300px}}
+
+/* ==========================================================
+   V12.1 — FULL-FRAME MEDIA VIEW
+   ========================================================== */
+body.lightbox-open{overflow:hidden}
+.project-figure{background:linear-gradient(145deg,#efeee8,#e2e1da);cursor:zoom-in}
+.project-figure img{object-fit:contain!important;object-position:center;transform:scale(.965);transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
+.project-card:hover .project-figure img{transform:scale(1);filter:saturate(1.03)}
+.project-figure::after{content:'';position:absolute;inset:0;border:1px solid rgba(255,255,255,.34);pointer-events:none;opacity:.75}
+.media-index{position:absolute;z-index:3;left:.8rem;top:.7rem;padding:.28rem .48rem;background:rgba(255,255,255,.78);backdrop-filter:blur(8px);font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.07em;color:var(--ink-45);opacity:0;transform:translateY(-5px);transition:opacity .35s ease,transform .35s ease}
+.project-figure:hover .media-index{opacity:1;transform:none}
+.view-full{position:absolute;z-index:3;right:.8rem;bottom:.8rem;padding:.42rem .62rem;background:rgba(23,22,15,.82);color:#fff;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.04em;opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .35s ease}
+.project-figure:hover .view-full{opacity:1;transform:none}
+.project-figure.has-video{cursor:default}
+.project-figure.has-video video{object-fit:contain;background:#101010}
+
+#image-lightbox{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .28s ease,visibility .28s ease}
+#image-lightbox.open{visibility:visible;opacity:1}
+.lightbox-backdrop{position:absolute;inset:0;background:rgba(12,13,14,.82);backdrop-filter:blur(12px)}
+.lightbox-shell{position:relative;z-index:1;width:min(94vw,1400px);height:min(92vh,1000px);display:flex;flex-direction:column;transform:translateY(18px) scale(.97);transition:transform .5s cubic-bezier(.2,.75,.2,1);color:#fff}
+#image-lightbox.open .lightbox-shell{transform:none}
+.lightbox-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 0 .8rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.04em;color:rgba(255,255,255,.65)}
+#lightbox-close{appearance:none;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;padding:.45rem .7rem;font:inherit;cursor:pointer;transition:background .2s ease,border-color .2s ease}
+#lightbox-close:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5)}
+.lightbox-media{min-height:0;flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035)}
+.lightbox-media img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;animation:lightboxFloat .8s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lightboxFloat{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+.lightbox-hint{padding-top:.7rem;font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.38)}
+@media(max-width:700px){.lightbox-shell{width:96vw;height:88vh}.lightbox-media{padding:.5rem}.media-index{opacity:1;transform:none}.view-full{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.project-figure img,.lightbox-shell,.lightbox-media img{transition:none;animation:none}}
+
+
+/* V14 hero refinement */
+.intro-headline{max-width:15ch;letter-spacing:-.055em;}
+.intro-headline .flip{color:var(--ink);position:relative;}
+.intro-headline .flip::after{content:"";position:absolute;left:0;right:0;bottom:-.08em;height:3px;background:var(--accent);transform:scaleX(.22);transform-origin:left;opacity:.9;}
+.intro-sub{margin-top:2.25rem;}
+.intro-role{margin-top:.25rem;font-weight:600;}
+.intro-meta{max-width:42rem;color:var(--muted);}
+@media (max-width:700px){.intro-headline{max-width:12ch;}.intro-headline .flip::after{height:2px;}}
+
+/* ==========================================================
+   BLUE RHYTHM — two deliberate colour breaks
+   ========================================================== */
+#about{
+  background: var(--accent);
+  color: #fff;
+  overflow: hidden;
+}
+#about .eyebrow,
+#about .about-list li span:first-child{
+  color: rgba(255,255,255,.68);
+}
+#about .about-list li{
+  border-color: rgba(255,255,255,.24);
+}
+#about .about-list li:last-child{
+  border-bottom-color: rgba(255,255,255,.24);
+}
+#about .about-list li:hover{
+  background: rgba(255,255,255,.08);
+}
+#about::after{
+  content:'03 / OFF THE RECORD';
+  position:absolute;
+  right:var(--edge);
+  bottom:2rem;
+  font:500 .62rem/1 'DM Mono',monospace;
+  letter-spacing:.12em;
+  color:rgba(255,255,255,.42);
+}
+
+#ai{
+  background: #DCE8FF;
+  color: var(--ink);
+}
+#ai .eyebrow{ color: rgba(23,22,15,.52); }
+#ai .ai-exchange .qa .a .who{ color: var(--accent); }
+#ai .project-card{
+  background:#fff;
+  border-color:rgba(23,22,15,.12);
+}
+#ai .project-card:hover{
+  box-shadow:12px 14px 0 rgba(37,99,235,.18);
+}
+#ai::before{ color:var(--accent); }
+
+/* ============================================================
+   V16 — VISUAL RHYTHM / DESIGN DESK
+   ============================================================ */
+#desk{background:#eeece5;overflow:hidden}
+.desk-intro{display:grid;grid-template-columns:1.15fr .65fr;gap:clamp(2rem,7vw,7rem);align-items:end;margin-bottom:clamp(1.5rem,3vw,2.5rem)}
+.desk-intro h2{font-family:var(--sans);font-size:clamp(1.8rem,3.6vw,3.4rem);line-height:1;letter-spacing:-.05em;font-weight:650;max-width:14ch;margin:.5rem 0 0}
+.desk-intro p{font-size:var(--step--1);line-height:1.55;color:var(--ink-70);max-width:34ch;margin:0 0 .35rem}
+.design-desk{border:1px solid #c9c7bf;background:#d9d7d0;box-shadow:18px 18px 0 rgba(37,99,235,.10);position:relative}
+.desk-windowbar{height:44px;border-bottom:1px solid #bcbab3;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 14px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;color:#5d5c57;background:#e4e2dc}
+.desk-dots{display:flex;gap:5px}.desk-dots i{width:7px;height:7px;border-radius:50%;background:#aaa79f;display:block}.desk-file{text-align:center}.desk-mode{text-align:right}
+.desk-body{display:grid;grid-template-columns:46px 1fr 210px;min-height:clamp(260px,26vw,380px)}
+.desk-tools{border-right:1px solid #bbb9b1;display:flex;flex-direction:column;align-items:center;gap:1rem;padding-top:1rem;font:600 .7rem/1 var(--sans);color:#77756f}
+.desk-tools span{width:26px;height:26px;display:grid;place-items:center;border:1px solid #c0beb7;background:#e0ded8}
+.desk-canvas{position:relative;margin:clamp(14px,2vw,24px);background:#f7f6f1;overflow:hidden;min-height:220px;border:1px solid #cfcdc5}
+.canvas-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.055) 1px,transparent 1px);background-size:24px 24px}
+.canvas-card{position:absolute;background:#fff;border:1px solid #dedcd5;padding:14px 16px;box-shadow:8px 9px 0 rgba(20,20,16,.08);display:flex;flex-direction:column;gap:7px;animation:deskFloat 5s ease-in-out infinite}
+.canvas-card span{font:500 .56rem/1 'DM Mono',monospace;color:#777}.canvas-card strong{font:650 clamp(1rem,1.7vw,1.5rem)/1 var(--sans);letter-spacing:-.035em}.canvas-card-a{left:12%;top:20%;transform:rotate(-4deg)}.canvas-card-b{right:11%;bottom:19%;transform:rotate(3deg);animation-delay:-2s}
+.canvas-shape{position:absolute;width:clamp(110px,16vw,220px);height:clamp(110px,16vw,220px);border-radius:50%;background:var(--accent);right:24%;top:20%;mix-blend-mode:multiply;opacity:.92;animation:shapePulse 6s ease-in-out infinite}
+.canvas-cursor{position:absolute;left:51%;top:51%;width:30px;height:30px;animation:cursorMove 6s ease-in-out infinite;z-index:3}.canvas-cursor:before{content:"";position:absolute;left:2px;top:1px;width:0;height:0;border-left:11px solid #111;border-top:7px solid transparent;border-bottom:7px solid transparent;transform:rotate(-28deg)}.canvas-cursor span{position:absolute;left:14px;top:15px;width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 0 5px rgba(37,99,235,.14)}
+.canvas-note{position:absolute;right:8%;top:10%;font:500 .6rem/1.3 'DM Mono',monospace;color:#6e6c66;transform:rotate(2deg)}.canvas-note b{color:var(--blue-dark);font-weight:600}
+.desk-layers{border-left:1px solid #bbb9b1;background:#dfddd7;padding:1rem}.layers-head{display:flex;justify-content:space-between;font:500 .58rem/1 'DM Mono',monospace;color:#77756f;padding-bottom:.9rem;border-bottom:1px solid #c4c2bb}.layer{display:grid;grid-template-columns:14px 1fr auto;gap:7px;align-items:center;padding:.8rem 0;border-bottom:1px solid #cbc9c2;font:500 .58rem/1.15 'DM Mono',monospace;color:#77756f}.layer b{font-weight:600;color:#282722}.layer em{font-style:normal;color:#aaa79f}.layer.active{color:var(--blue-dark);background:rgba(255,255,255,.35);margin:0 -.5rem;padding-left:.5rem;padding-right:.5rem}.layer.active b{color:#111}
+.desk-status{display:flex;justify-content:space-between;border-top:1px solid #bbb9b1;padding:9px 13px;font:500 .58rem/1 'DM Mono',monospace;color:#74716a;background:#e4e2dc}.desk-status>span:first-child{color:var(--accent);margin-right:.35rem}.desk-status-right{color:#99968e}
+.process-strip{display:flex;align-items:center;gap:clamp(.7rem,2vw,1.5rem);position:relative;margin-top:1.4rem;padding:1rem 0;border-top:1px solid #c9c7bf;border-bottom:1px solid #c9c7bf;overflow:hidden;font:600 .66rem/1 'DM Mono',monospace;letter-spacing:.1em;color:#5f5d57}.process-strip b{color:var(--accent);font-weight:500}.process-strip i{position:absolute;width:54px;height:2px;background:var(--accent);left:-60px;animation:processScan 5s linear infinite}
+@keyframes deskFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}@keyframes shapePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(5deg)}}@keyframes cursorMove{0%,100%{transform:translate(0,0)}30%{transform:translate(75px,-35px)}60%{transform:translate(-40px,55px)}80%{transform:translate(40px,20px)}}@keyframes processScan{to{left:105%}}
+.scroll-next{display:flex;align-items:center;gap:12px;margin-top:3.5rem;font:500 .62rem/1 'DM Mono',monospace;letter-spacing:.08em;color:var(--ink-45)}.scroll-next i{width:42px;height:1px;background:var(--accent);position:relative}.scroll-next i:after{content:"";position:absolute;right:-1px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--accent);animation:nextDot 2s ease-in-out infinite}@keyframes nextDot{50%{right:100%;transform:translateX(6px)}}
+/* Reduce CTA repetition: the final actions have different jobs. */
+.ending-ctas .cta{min-width:220px;text-align:center}.ending-ctas .cta.ghost{background:transparent}
+/* Make work feel more like a designed system than a gallery. */
+#work{position:relative}.category-block{overflow:hidden}.category-block + .category-block{border-top:0}.category-block + .category-block:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line)}
+.project-figure:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.24) 50%,transparent 65%);transform:translateX(-120%);transition:transform .8s var(--ease);pointer-events:none}.project-card:hover .project-figure:after{transform:translateX(120%)}
+@media(max-width:800px){.desk-intro{grid-template-columns:1fr}.desk-body{grid-template-columns:34px 1fr}.desk-layers{display:none}.desk-windowbar{grid-template-columns:1fr auto}.desk-mode{display:none}.desk-status-right{display:none}}
+@media(prefers-reduced-motion:reduce){.canvas-card,.canvas-shape,.canvas-cursor,.process-strip i,.canvas-cursor span{animation:none!important}}
+
+/* V17 — give project captions breathing room from the card edges */
+.project-card{background:#fff;}
+.project-card .project-meta{margin:0;padding:1.2rem 1.25rem 0;align-items:flex-start;}
+.project-card .project-desc{margin:.45rem 0 0;padding:0 1.25rem 1.35rem;max-width:52ch;}
+.project-card .project-meta .name{line-height:1.08;}
+.project-card .project-meta .yr{padding-top:.18rem;flex:none;}
+@media(max-width:560px){
+  .project-card .project-meta{padding:1rem 1rem 0;}
+  .project-card .project-desc{padding:0 1rem 1.1rem;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOADER
+     ============================================================ -->
+<div id="loader" aria-hidden="true">
+  <p class="loader-line" id="loader-text">Finding FINAL_v7_REAL_FINAL.psd&hellip;</p>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<header id="site-nav">
+  <div class="nav-inner">
+    <a href="#intro" class="nav-mark">Chandrashekar</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#ending">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<nav id="progress-rail" aria-label="Interview progress">
+  <button class="progress-item" data-target="#intro"><span class="dot"></span><span class="label">01 Intro</span></button>
+  <button class="progress-item" data-target="#work"><span class="dot"></span><span class="label">02 Work</span></button>
+  <button class="progress-item" data-target="#ai"><span class="dot"></span><span class="label">03 AI</span></button>
+  <button class="progress-item" data-target="#toolkit"><span class="dot"></span><span class="label">04 Toolkit</span></button>
+  <button class="progress-item" data-target="#hire"><span class="dot"></span><span class="label">05 Capabilities</span></button>
+  <button class="progress-item" data-target="#ending"><span class="dot"></span><span class="label">06 Final question</span></button>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     INTRO
+     ============================================================ -->
+<section id="intro">
+  <div class="wrap">
+    <p class="intro-line">This whole portfolio is one long interview</p>
+    <h1 class="intro-headline">
+      I make complicated things<br>
+      <span class="flip">look simple.</span>
+    </h1>
+
+    <div class="intro-sub">
+      <p class="intro-name">Chandrashekar</p>
+      <p class="intro-role">Lead Designer · 8 years</p>
+      <p class="intro-meta">Brand · Campaigns · Digital · Motion · AI-assisted creative</p>
+    </div>
+
+    <a href="#work" class="cta" data-scroll>Skip to the work →</a>
+    <p class="intro-foot">Or scroll — I answer a few questions first. <span class="blue-note">(Takes 20 seconds.)</span></p>
+  </div>
+
+  <div class="scroll-cue"><span class="stem"></span> Scroll</div>
+</section>
+
+<!-- ============================================================
+     ACT 1 — TELL ME ABOUT YOURSELF
+     ============================================================ -->
+<section id="tell-me" class="qa-section section-tight">
+  <div class="wrap">
+    <div class="qa reveal-group">
+      <div class="q">
+        <span class="who">Interviewer</span>
+        <span class="line typed" data-type>Tell me about yourself.</span>
+      </div>
+      <div class="a">
+        <span class="who">Chandrashekar</span>
+        <span class="line">
+          8 years designing things.<br>
+          Some beautiful. Some complicated.<br>
+          Some that started with <small>&ldquo;Can you make it pop?&rdquo;</small><br>
+          Anyway — I'll show you.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DESIGN DESK — VISUAL INTERLUDE
+     ============================================================ -->
+<section id="desk" class="desk-section section-tight">
+  <div class="wrap">
+    <div class="desk-intro">
+      <div>
+        <span class="eyebrow">Behind the work</span>
+        <h2>There's a brief hiding under every pixel.</h2>
+      </div>
+      <p>Concept → hierarchy → movement → "one last change."</p>
+    </div>
+
+    <div class="design-desk" aria-label="A visual representation of a design workspace">
+      <div class="desk-windowbar">
+        <span class="desk-dots"><i></i><i></i><i></i></span>
+        <span class="desk-file">CAMPAIGN_FINAL_v8.fig</span>
+        <span class="desk-mode">RGB / 16-bit</span>
+      </div>
+      <div class="desk-body">
+        <div class="desk-tools"><span>V</span><span>T</span><span>□</span><span>◌</span><span>↗</span></div>
+        <div class="desk-canvas">
+          <div class="canvas-grid"></div>
+          <div class="canvas-card canvas-card-a"><span>01 / BRIEF</span><strong>Make it clear.</strong></div>
+          <div class="canvas-card canvas-card-b"><span>02 / TYPE</span><strong>Give it room.</strong></div>
+          <div class="canvas-shape"></div>
+          <div class="canvas-cursor"><span></span></div>
+          <div class="canvas-note">looks good.<br><b>don't touch.</b></div>
+        </div>
+        <div class="desk-layers">
+          <div class="layers-head"><span>LAYERS</span><span>⌄</span></div>
+          <div class="layer active"><span>◉</span><b>FINAL DIRECTION</b><em>01</em></div>
+          <div class="layer"><span>◉</span>IMAGE / HERO<em>02</em></div>
+          <div class="layer"><span>◉</span>TYPE SYSTEM<em>03</em></div>
+          <div class="layer"><span>◉</span>BLUE ACCENT<em>04</em></div>
+          <div class="layer"><span>◉</span>BRIEF<em>05</em></div>
+        </div>
+      </div>
+      <div class="desk-status"><span>●</span> Autosaved 2 min ago <span class="desk-status-right">5 layers · 1 good idea · 0 panic</span></div>
+    </div>
+
+    <div class="process-strip" aria-hidden="true">
+      <span>BRIEF</span><b>→</b><span>THINK</span><b>→</b><span>MAKE</span><b>→</b><span>MOVE</span><b>→</b><span>SHIP</span><i></i>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACT 2 — THE WORK
+     ============================================================ -->
+<section id="work">
+  <div class="wrap" style="margin-bottom: 1rem;">
+    <span class="eyebrow">Featured work</span>
+  </div>
+
+  <div id="category-container">
+    <!-- Populated by js/main.js from js/data.js. One block per
+         category, each opening with its interview question. -->
+  </div>
+
+  <p class="wrap scroll-nudge fade" aria-hidden="true">
+    Keep going.<br>I'm not done showing off. <span class="blue-note">(Respectfully.)</span>
+  </p>
+</section>
+
+<section id="selected-work" class="section-tight">
+  <div class="wrap">
+    <span class="eyebrow">Selected work</span>
+    <h2 class="serif" style="font-size:var(--step-2); font-weight:400; margin:.5rem 0 0;">The smaller, quieter archive.</h2>
+    <div class="selected-grid" id="selected-grid">
+      <!-- Populated by js/main.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACT 3 — PERSONALITY
+     ============================================================ -->
+<section id="personality">
+  <div class="wrap">
+    <div class="hr-heading">
+      <div>
+        <span class="eyebrow">HR / mandatory questions</span>
+        <h2 class="hr-title">A few questions HR insisted on.</h2>
+      </div>
+      <div class="hr-meta"><span>INTERVIEW FORM</span><span>03 / 03</span><span class="hr-approved">APPROVED*</span></div>
+    </div>
+
+    <div class="quip-grid">
+      <div class="quip">
+        <div class="quip-top"><span>01</span><span>WEAKNESS</span></div>
+        <div class="q">&ldquo;What's your biggest weakness?&rdquo;</div>
+        <div class="exchange">
+          <div class="line"><span class="who">CHANDRASHEKAR</span><span class="txt">Kerning.</span></div>
+        </div>
+        <p class="note">It's never &ldquo;just 2 pixels.&rdquo;</p>
+        <span class="quip-stamp">NOTED</span>
+      </div>
+
+      <div class="quip">
+        <div class="quip-top"><span>02</span><span>PRESSURE</span></div>
+        <div class="q">&ldquo;Can you work under pressure?&rdquo;</div>
+        <div class="exchange">
+          <div class="line"><span class="who">CHANDRASHEKAR</span><span class="txt">Yes.</span></div>
+          <div class="line interviewer"><span class="who">INTERVIEWER</span><span class="txt">How much pressure?</span></div>
+          <div class="line"><span class="who">CHANDRASHEKAR</span><span class="txt">&ldquo;We need this in 30 minutes.&rdquo;</span></div>
+        </div>
+        <p class="note">&hellip;show me the brief.</p>
+        <span class="quip-stamp">HANDLED</span>
+      </div>
+
+      <div class="quip">
+        <div class="quip-top"><span>03</span><span>FEEDBACK</span></div>
+        <div class="q">&ldquo;How do you handle feedback?&rdquo;</div>
+        <div class="exchange">
+          <div class="line"><span class="who">CHANDRASHEKAR</span><span class="txt">Depends.</span></div>
+          <div class="line interviewer"><span class="who">INTERVIEWER</span><span class="txt">On?</span></div>
+          <div class="line"><span class="who">CHANDRASHEKAR</span><span class="txt">Whether it's feedback or a completely different brief.</span></div>
+        </div>
+        <p class="note">Same file. New brief.</p>
+        <span class="quip-stamp">REVISED</span>
+      </div>
+    </div>
+    <p class="hr-footnote">*Approved by nobody in particular. But the alignment is excellent.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about" class="section-tight">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Off the record</span>
+      <p class="statement">8 years of turning complicated ideas into clear visual communication.</p>
+    </div>
+    <ul class="about-list">
+      <li><span>Brand</span><span>Identity systems and the guidelines that keep them honest</span></li>
+      <li><span>Campaigns</span><span>Concept through to execution, across formats</span></li>
+      <li><span>Digital</span><span>Web, social, email, product</span></li>
+      <li><span>Motion</span><span>When static isn't enough</span></li>
+      <li><span>Marketing</span><span>Communication that's built to be understood, not just seen</span></li>
+      <li><span>Fintech &amp; wealth management</span><span>Making serious money look like it was designed by someone, not a spreadsheet</span></li>
+      <li><span>AI-assisted workflows</span><span>A faster route to the same good idea</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     TOOLKIT — THE ACTUAL SOFTWARE
+     ============================================================ -->
+<section id="toolkit" class="section-tight toolkit-section">
+  <div class="wrap">
+    <div class="toolkit-head">
+      <div>
+        <span class="eyebrow">Toolkit / loaded</span>
+        <h2 class="toolkit-title">The software behind the work.</h2>
+      </div>
+      <div class="toolkit-status"><span class="status-dot"></span><span id="tool-status">No plugins required.</span></div>
+    </div>
+
+    <div class="tool-grid" aria-label="Design tools">
+      <div class="tool-card"><span class="tool-index">01</span><strong>Adobe Photoshop</strong><span class="tool-note">Retouching · compositing · campaign craft</span></div>
+      <div class="tool-card"><span class="tool-index">02</span><strong>Adobe Illustrator</strong><span class="tool-note">Identity · vector systems · artwork</span></div>
+      <div class="tool-card"><span class="tool-index">03</span><strong>Figma</strong><span class="tool-note">Digital · layouts · collaborative systems</span></div>
+      <div class="tool-card"><span class="tool-index">04</span><strong>Premiere Pro</strong><span class="tool-note">Motion · edits · social video</span></div>
+      <div class="tool-card"><span class="tool-index">05</span><strong>CorelDRAW</strong><span class="tool-note">Production · print · large-format artwork</span></div>
+      <div class="tool-card ai-tool"><span class="tool-index">06</span><strong>Midjourney</strong><span class="tool-note">Exploration · image direction · ideation</span></div>
+      <div class="tool-card ai-tool"><span class="tool-index">07</span><strong>Veo</strong><span class="tool-note">AI video · motion experiments · concepts</span></div>
+      <div class="tool-card ai-tool"><span class="tool-index">08</span><strong>Adobe Firefly</strong><span class="tool-note">Generative workflows · variations · production</span></div>
+      <div class="tool-card code-tool"><span class="tool-index">09</span><strong>HTML / CSS</strong><span class="tool-note">Portfolio builds · prototypes · design-to-browser</span></div>
+    </div>
+
+    <div class="toolkit-footnote">
+      <span>Current status: <b>making the pixels behave.</b></span>
+      <span class="toolkit-micro">Alt text is written. Layers are named. Mostly.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACT 4 — AI
+     ============================================================ -->
+<section id="ai">
+  <div class="wrap">
+    <span class="eyebrow">AI Magic / Act four</span>
+    <div class="ai-exchange" style="margin-top:1.5rem;">
+      <div class="qa">
+        <div class="q"><span class="who">Interviewer</span><span class="line">Do you use AI?</span></div>
+        <div class="a"><span class="who">Chandrashekar</span><span class="line">Yes.</span></div>
+      </div>
+      <div class="qa">
+        <div class="q"><span class="who">Interviewer</span><span class="line">Does AI replace designers?</span></div>
+        <div class="a"><span class="who">Chandrashekar</span><span class="line">No.</span></div>
+      </div>
+      <div class="qa">
+        <div class="q"><span class="who">Interviewer</span><span class="line">Then what does it do?</span></div>
+        <div class="a"><span class="who">Chandrashekar</span><span class="line">It replaces the 47 tabs I used to have open.</span></div>
+      </div>
+    </div>
+
+    <div class="project-grid" id="ai-grid" style="margin-top:3.5rem;">
+      <!-- Populated by js/main.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACT 5 — THE INTERVIEWER GETS NERVOUS
+     ============================================================ -->
+<section id="nervous">
+  <div class="wrap">
+    <div class="qa">
+      <div class="q"><span class="who">Interviewer</span><span class="line">Do you have any questions for us?</span></div>
+      <div class="a"><span class="who">Chandrashekar</span><span class="line">Actually, yes.</span></div>
+    </div>
+    <p class="fourth-wall">Why are you still scrolling?</p>
+    <div class="scroll-next"><span>KEEP SCROLLING</span><i></i><span>THE GOOD PART IS AHEAD</span></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACT 6 — WHY SHOULD WE HIRE YOU?
+     ============================================================ -->
+<section id="hire">
+  <div class="wrap">
+    <div class="qa">
+      <div class="q"><span class="who">Interviewer</span><span class="line">Why should we hire you?</span></div>
+      <div class="a">
+        <span class="who">Chandrashekar</span>
+        <span class="line">Because I don't just make the thing.<br><em style="font-style:italic; color:rgba(245,244,239,.6);">I figure out what the thing needs to be.</em></span>
+      </div>
+    </div>
+
+    <div class="cap-list">
+      <div class="cap-row">
+        <span class="yrs serif">8 years</span>
+        <span class="items">
+          <span>Brand</span><span>Campaigns</span><span>Digital</span>
+          <span>Motion</span><span>Visual Systems</span><span>AI-Assisted Creative</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ENDING
+     ============================================================ -->
+<section id="ending">
+  <div class="wrap">
+    <h2 class="ending-title serif">Interview complete.</h2>
+    <p class="ending-sub">Thank you for your time.</p>
+    <p class="ending-note">You may now pretend this was just another portfolio review.</p>
+
+    <div class="ending-ctas">
+      <a href="mailto:chandrashekar96.n@gmail.com?subject=I%20have%20a%20brief" class="cta">Send a brief →</a>
+      <a href="tel:+918431049783" class="cta ghost">Call me →</a>
+    </div>
+
+    <div class="ending-contact">
+      <span>Bengaluru, India</span>
+      <a href="mailto:chandrashekar96.n@gmail.com">chandrashekar96.n@gmail.com</a>
+      <a href="tel:+918431049783">+91 84310 49783</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>&copy; <span id="year"></span> Chandrashekar</span>
+  <span>Designed, mostly on purpose. <span class="blue-note">●</span></span>
+</footer>
+
+<!-- Full-frame image viewer -->
+<div id="image-lightbox" aria-hidden="true">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-shell" role="dialog" aria-modal="true" aria-label="Full project image">
+    <div class="lightbox-top">
+      <span id="lightbox-title">Project image</span>
+      <button id="lightbox-close" type="button" aria-label="Close image">Close ×</button>
+    </div>
+    <div class="lightbox-media"><img id="lightbox-image" src="" alt=""></div>
+    <div class="lightbox-hint">ESC to close · Full frame preserved</div>
+  </div>
+</div>
+
+<!-- Easter egg surfaces -->
+<div id="cursor-note" role="status" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/**
+ * Portfolio project data — V12
+ * Titles and descriptions are written to reflect the actual supplied work.
+ */
+const PROJECTS = [
+  {
+    slug: "brand-wealth-app",
+    title: "Wealth, Reimagined",
+    category: "brand",
+    year: "2026",
+    client: "Wealth / Private Wealth",
+    description: "A premium visual direction for a wealth platform, using product screens, restrained luxury cues and a dark editorial palette to make sophisticated investing feel modern and tangible.",
+    role: "Brand Designer / Visual Designer",
+    scope: "Visual direction, campaign creative, product-led brand communication",
+    approach: "Built the story around the product itself: strong device compositions, a controlled luxury palette and clear hierarchy that lets the interface become the hero.",
+    tools: ["Photoshop", "Illustrator", "Figma"],
+    hero: "https://ik.imagekit.io/Chan/W%20creatives-12.png?updatedAt=1769950118340",
+    gallery: ["https://ik.imagekit.io/Chan/W%20creatives-12.png?updatedAt=1769950118340"],
+    video: "",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "brand-fundsindia-private-wealth",
+    title: "Greater Possibilities",
+    category: "brand",
+    year: "2026",
+    client: "FundsIndia Private Wealth",
+    description: "A premium brand communication piece positioning private wealth around discipline, expertise and a more certain tomorrow — with an understated, aspirational visual language.",
+    role: "Brand Designer",
+    scope: "Brand communication, art direction, typography, image selection and layout",
+    approach: "Balanced a calm architectural image with generous typography and a restrained green-and-gold palette to create a sophisticated wealth-management expression.",
+    tools: ["Photoshop", "Illustrator", "Figma"],
+    hero: "https://ik.imagekit.io/Chan/PW_Brand.png",
+    gallery: ["https://ik.imagekit.io/Chan/PW_Brand.png"],
+    video: "",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "campaign-zero-brokerage",
+    title: "Zero Brokerage, Zero Friction",
+    category: "campaign",
+    year: "2024",
+    client: "Fisdom",
+    description: "A high-contrast acquisition emailer built around a simple promotional promise: zero brokerage. The visual turns the offer into an immediate, memorable hook.",
+    role: "Graphic Designer",
+    scope: "Email creative, visual concept, typography, illustration treatment and CTA design",
+    approach: "Made the offer impossible to miss by turning the '0' into the central visual character, then kept the supporting copy and CTA highly scannable for an email environment.",
+    tools: ["Photoshop", "Illustrator"],
+    hero: "https://ik.imagekit.io/Chan/Emailers/60fd43205793231.66c20b32ce8ab.png?updatedAt=1765700803875",
+    gallery: ["https://ik.imagekit.io/Chan/Emailers/60fd43205793231.66c20b32ce8ab.png?updatedAt=1765700803875"],
+    video: "",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "campaign-wealth-goes-further",
+    title: "Wealth That Goes Further",
+    category: "campaign",
+    year: "2026",
+    client: "FundsIndia Private Wealth",
+    description: "A premium emailer for private wealth, designed to communicate bespoke wealth management through a calm, aspirational editorial experience.",
+    role: "Creative / Brand Designer",
+    scope: "Email campaign, art direction, visual hierarchy, CTA and responsive communication system",
+    approach: "Used a luxury residential setting, restrained typography and a modular benefit section to move the reader from aspiration to proof to action.",
+    tools: ["Photoshop", "Illustrator", "Figma"],
+    hero: "https://ik.imagekit.io/Chan/Emailers/PW_emailer.png",
+    gallery: ["https://ik.imagekit.io/Chan/Emailers/PW_emailer.png"],
+    video: "",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "digital-mutual-fund",
+    title: "Mutual Funds, Made More Visible",
+    category: "digital",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A digital communication asset for mutual-fund marketing, designed to make a financial message easier to notice and understand in a fast-scrolling environment.",
+    role: "Digital Designer",
+    scope: "Social creative, campaign adaptation, typography, composition and CTA hierarchy",
+    approach: "Focused on a single visual idea and a strong information hierarchy so the creative could communicate quickly without becoming another generic finance post.",
+    tools: ["Photoshop", "Illustrator"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/GA_MF_NEW11.jpg?updatedAt=1766651272448",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/GA_MF_NEW11.jpg?updatedAt=1766651272448"],
+    video: "",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "digital-ga-social",
+    title: "Growth Advertising, Built to Scroll",
+    category: "digital",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A social-first advertising creative developed for a performance-minded digital environment, balancing message clarity with a stronger visual hook.",
+    role: "Digital / Campaign Designer",
+    scope: "Social ad creative, layout, visual system and campaign adaptation",
+    approach: "Designed around the dimensions and behaviour of social feeds: one dominant message, strong visual entry point and supporting information arranged for quick scanning.",
+    tools: ["Photoshop", "Illustrator"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/TW-GA-02-1200X628%20(2).jpg?updatedAt=1766651273979",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/TW-GA-02-1200X628%20(2).jpg?updatedAt=1766651273979"],
+    video: "",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-japan-event",
+    title: "Japan Event — Motion Identity",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "An event-focused motion piece created to give a live moment a stronger visual identity and a more cinematic digital presence.",
+    role: "Motion Designer",
+    scope: "Concept, storyboard, animation, typography and final edit",
+    approach: "Built the motion around pacing and reveal — using movement to guide attention rather than simply animating every element on screen.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/Japan%20Event-01.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-debt-pms",
+    title: "Debt PMS — Teaser",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A teaser built to introduce a debt PMS proposition with a concise, premium motion language suited to financial audiences.",
+    role: "Motion Designer",
+    scope: "Concept, edit, typography, transitions and final delivery",
+    approach: "Kept the story compact and information-led, using rhythm, typography and controlled transitions to build curiosity without overloading the viewer.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/Debt%20PMS%20Teaser%20Video.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-independence-day",
+    title: "Independence Day — A Moving Story",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia Private Wealth",
+    description: "A 12-second Independence Day concept where three colours travel through Indian landmarks before resolving into the national flag.",
+    role: "Motion Designer / Creative Designer",
+    scope: "Concept, storyboard, visual development, animation and final edit",
+    approach: "Created a simple visual metaphor: three coloured balls become a continuous journey through the Taj Mahal, India Gate and the Himalayas, finally transforming into the flag.",
+    tools: ["Illustrator", "Premiere Pro", "AI-assisted creative tools"],
+    hero: "",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/ChatGPT%20Image%20Jul%2031,%202026,%2011_28_27%20PM.png"],
+    video: "https://ik.imagekit.io/Chan/Independence%20Day.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-shakti",
+    title: "Shakti — Celebrating Strength",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A short-form motion piece built around the theme of Shakti, using visual movement to create an emotive and culturally resonant message.",
+    role: "Motion Designer",
+    scope: "Creative concept, visual treatment, animation and edit",
+    approach: "Focused on expressive pacing and visual transitions so the emotional idea could land quickly in a social-first format.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/shakti%20video%2021-02_6.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-elevate-ncd",
+    title: "Elevate NCD — Product Teaser",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A motion-led teaser for an NCD communication, designed to make a financial product feel clearer, more approachable and more dynamic.",
+    role: "Motion / Digital Designer",
+    scope: "Storyboarding, animation, typography, product communication and edit",
+    approach: "Structured the message in short visual beats, using motion to establish hierarchy and keep the financial information digestible.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/ELevate%20NCD%20Fix_6_1.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-fifa-spain",
+    title: "FIFA — Spain",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A sports-led motion creative built around Spain and the energy of FIFA, translating a high-interest moment into branded social content.",
+    role: "Motion Designer",
+    scope: "Concept, motion graphics, edit, typography and social adaptation",
+    approach: "Used sports energy, quick pacing and graphic transitions to create a piece that feels native to social while retaining brand discipline.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/FIFA_Spain.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-ideathon",
+    title: "Ideathon — From Idea to Energy",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A motion communication piece for an ideathon, designed to create momentum around participation and the idea of turning concepts into action.",
+    role: "Motion Designer",
+    scope: "Concept, storyboard, motion graphics, edit and final delivery",
+    approach: "Built a fast, energetic visual rhythm that gives the communication a sense of movement and keeps the viewer moving through the message.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/Ideathon%20video%203.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-10k-family",
+    title: "10K Family Accounts — Milestone",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A milestone-led social video celebrating the growth of family accounts, turning a business number into a simple piece of brand communication.",
+    role: "Motion / Social Designer",
+    scope: "Concept, typography, motion graphics, edit and social delivery",
+    approach: "Made the milestone the hero, then built the motion around a clear progression so the achievement reads instantly even without sound.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/linkedin%20Post%2010K%20Family%20accounts.mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "motion-10k-teaser",
+    title: "10K — The Teaser",
+    category: "motion",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A teaser version of the 10K milestone communication, built to create anticipation before the full reveal.",
+    role: "Motion / Social Designer",
+    scope: "Concept, teaser edit, typography, motion graphics and final delivery",
+    approach: "Withheld the full reveal and used timing, scale and movement to create a short-form build-up around the milestone.",
+    tools: ["Premiere Pro", "After Effects"],
+    hero: "",
+    gallery: [],
+    video: "https://ik.imagekit.io/Chan/10k%20video%20teaser-01_4_1).mp4",
+    credits: "",
+    featured: true
+  },
+  {
+    slug: "selected-mutual-fund-analysis",
+    title: "Portfolio Clarity",
+    category: "digital",
+    year: "2026",
+    client: "Wealth",
+    description: "A dark, product-led creative promoting a mutual-fund portfolio analysis experience and its promise of clearer investment insight.",
+    role: "Digital Designer",
+    scope: "Campaign creative, product visualisation, typography and CTA",
+    approach: "Combined a strong diagnostic headline with a product-report visual to make an otherwise technical financial proposition feel immediate.",
+    tools: ["Photoshop", "Illustrator"],
+    hero: "https://ik.imagekit.io/Chan/WIR%20creatives-17.png?updatedAt=1769950115385",
+    gallery: ["https://ik.imagekit.io/Chan/WIR%20creatives-17.png?updatedAt=1769950115385"],
+    video: "",
+    credits: "",
+    featured: false
+  },
+  {
+    slug: "selected-namma-ooru",
+    title: "Stories of Namma Ooru",
+    category: "brand",
+    year: "2026",
+    client: "Independent Visual Exploration",
+    description: "A visual storytelling exploration celebrating everyday life, people and the warmth of Namma Ooru through an illustrated narrative frame.",
+    role: "Creative Designer / Visual Storyteller",
+    scope: "Concept, art direction, AI-assisted illustration and composition",
+    approach: "Built a single narrative image with multiple characters and environmental cues so the artwork feels like a story rather than a static poster.",
+    tools: ["AI-assisted creative tools", "Photoshop"],
+    hero: "https://ik.imagekit.io/Chan/Whisk_4804262381c7e36b4954518eb18e7c4cdr.jpeg?updatedAt=1766845579970",
+    gallery: ["https://ik.imagekit.io/Chan/Whisk_4804262381c7e36b4954518eb18e7c4cdr.jpeg?updatedAt=1766845579970"],
+    video: "",
+    credits: "",
+    featured: false
+  },
+  {
+    slug: "selected-debt-pms",
+    title: "Debt PMS — The Proposition",
+    category: "campaign",
+    year: "2026",
+    client: "FundsIndia",
+    description: "A supporting communication for the Debt PMS proposition, designed as a focused financial-information asset with a premium visual treatment.",
+    role: "Campaign Designer",
+    scope: "Concept, layout, typography, financial communication and campaign adaptation",
+    approach: "Prioritised clarity and visual confidence, giving the product proposition a clean structure that can be understood at a glance.",
+    tools: ["Photoshop", "Illustrator", "Figma"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/Debt%20PMS_1-01.png",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/Debt%20PMS_1-01.png"],
+    video: "",
+    credits: "",
+    featured: false
+  },
+  {
+    slug: "selected-jadecaps",
+    title: "JadeCaps — From Idle to Income",
+    category: "campaign",
+    year: "2026",
+    client: "FundsIndia Private Wealth × JadeCaps",
+    description: "A partner communication explaining how idle real estate can become an income-generating asset through professionally managed hospitality operations.",
+    role: "Campaign / Brand Designer",
+    scope: "One-pager, visual hierarchy, information design, iconography and partner communication",
+    approach: "Structured a dense proposition into clear sections — promise, benefits, proof points and next steps — while maintaining the Private Wealth visual language.",
+    tools: ["Photoshop", "Illustrator", "Figma"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/Jadecaps%201%20pager-01.png",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/Jadecaps%201%20pager-01.png"],
+    video: "",
+    credits: "",
+    featured: false
+  },
+  {
+    slug: "ai-debt-pms-teaser",
+    title: "AI Magic — Debt PMS Teaser",
+    category: "ai",
+    year: "2026",
+    client: "FundsIndia",
+    description: "An AI-assisted visual exploration for a Debt PMS teaser, using generative imagery as a starting point for a polished financial communication.",
+    role: "AI-assisted Creative Designer",
+    scope: "Visual ideation, image generation, art direction, compositing and final design",
+    approach: "Used generative tools to accelerate visual exploration, then applied conventional design judgement to bring the output into a usable campaign direction.",
+    tools: ["Midjourney", "Adobe Firefly", "Photoshop"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/Debt%20PMS_1-02.png",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/Debt%20PMS_1-02.png"],
+    video: "",
+    credits: "",
+    featured: false
+  },
+  {
+    slug: "ai-private-wealth-storyboard",
+    title: "AI Magic — Private Wealth Storyboard",
+    category: "ai",
+    year: "2026",
+    client: "FundsIndia Private Wealth",
+    description: "A storyboard exploration using AI-generated lifestyle imagery to develop a tactile, human narrative for a Private Wealth product communication.",
+    role: "AI Creative Director / Designer",
+    scope: "Concept development, prompt direction, storyboard, image generation and visual sequencing",
+    approach: "Started with the narrative beat rather than the image: each generated frame was designed to support a simple reveal sequence and a coherent brand world.",
+    tools: ["AI image generation", "Photoshop", "Illustrator"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/ChatGPT%20Image%20Sep%205,%202026,%2005_51_20%20PM.png",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/ChatGPT%20Image%20Sep%205,%202026,%2005_51_20%20PM.png"],
+    video: "",
+    credits: "",
+    featured: false
+  },
+  {
+    slug: "ai-independence-storyboard",
+    title: "AI Magic — Independence Day Storyboard",
+    category: "ai",
+    year: "2026",
+    client: "FundsIndia Private Wealth",
+    description: "A storyboard for a 12-second Independence Day animation, using AI-assisted visual development to test the narrative before production.",
+    role: "AI-assisted Creative Designer / Motion Concept",
+    scope: "Concept, storyboard, visual exploration and motion planning",
+    approach: "Mapped the complete 12-second sequence first — timing, landmarks, colour movement and final flag reveal — so production had a clear visual blueprint.",
+    tools: ["AI image generation", "Illustrator", "Premiere Pro"],
+    hero: "https://ik.imagekit.io/Chan/Social%20Media/ChatGPT%20Image%20Jul%2031,%202026,%2011_28_27%20PM.png",
+    gallery: ["https://ik.imagekit.io/Chan/Social%20Media/ChatGPT%20Image%20Jul%2031,%202026,%2011_28_27%20PM.png"],
+    video: "",
+    credits: "",
+    featured: false
+  }
+];
+
+const CATEGORY_INTROS = {
+  brand: { question: "Can you handle brand design?", sub: "Identity systems, visual direction and the details that make a brand feel intentional." },
+  campaign: { question: "Can you build campaigns?", sub: "Concept through to execution, across formats and audiences." },
+  digital: { question: "Digital?", sub: "Social, email and performance creative built for attention and clarity." },
+  motion: { question: "Motion?", sub: "When static isn't enough, the idea gets to move." },
+  ai: { question: "And AI?", sub: "A production advantage — not a substitute for design judgement." }
+};
+
+const CATEGORY_LABELS = {
+  brand: "Brand Design",
+  campaign: "Campaign",
+  digital: "Digital",
+  motion: "Motion",
+  ai: "AI Magic"
+};
+
+</script>
+<script>
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ============================================================
+     FULL-FRAME IMAGE VIEWER
+     ============================================================ */
+  function initLightbox() {
+    var modal = document.getElementById("image-lightbox");
+    var modalImg = document.getElementById("lightbox-image");
+    var modalTitle = document.getElementById("lightbox-title");
+    var close = document.getElementById("lightbox-close");
+    if (!modal || !modalImg) return;
+
+    function openLightbox(img) {
+      modalImg.src = img.currentSrc || img.src;
+      modalImg.alt = img.alt || "Full project image";
+      if (modalTitle) modalTitle.textContent = img.alt || "Project image";
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lightbox-open");
+    }
+
+    function closeLightbox() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lightbox-open");
+      setTimeout(function(){ modalImg.src = ""; }, 250);
+    }
+
+    document.addEventListener("click", function(e) {
+      var img = e.target.closest(".project-figure img, .detail-gallery img");
+      if (img) {
+        e.preventDefault();
+        e.stopPropagation();
+        openLightbox(img);
+        return;
+      }
+      if (e.target.closest("#lightbox-close") || e.target.closest(".lightbox-backdrop")) closeLightbox();
+    });
+
+    if (close) close.addEventListener("click", closeLightbox);
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeLightbox();
+    });
+  }
+  initLightbox();
+
+  /* ============================================================
+     LOADER
+     ============================================================ */
+  (function loader() {
+    var loaderEl = document.getElementById("loader");
+    var textEl = document.getElementById("loader-text");
+    if (!loaderEl) return;
+
+    document.body.classList.add("lock");
+
+    var delay = reduceMotion ? 250 : 1000;
+    setTimeout(function () {
+      if (textEl) textEl.textContent = "Could not locate. Proceeding anyway.";
+    }, delay);
+
+    setTimeout(function () {
+      loaderEl.classList.add("hidden");
+      document.body.classList.remove("lock");
+    }, delay + (reduceMotion ? 150 : 850));
+  })();
+
+  /* ============================================================
+     RENDER PROJECT SECTIONS FROM data.js
+     ============================================================ */
+  function fieldOrPlaceholder(value, label) {
+    if (value && String(value).trim().length) {
+      return { text: value, empty: false };
+    }
+    return { text: "[ADD " + label.toUpperCase() + "]", empty: true };
+  }
+
+  function figureMarkup(project) {
+    var media = '';
+    if (project.video) {
+      media = '<video class="project-video" src="' + project.video + '" muted loop playsinline preload="metadata" controls aria-label="' + (project.title || 'Motion project') + '"></video>';
+    } else {
+      media = '<img src="' + project.hero + '" alt="' +
+        (project.title || "Untitled project") +
+        '" loading="lazy" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+        '<div class="ph" style="display:none;">' +
+          '<span class="ph-label">Hero image</span>' +
+          '<span class="ph-path">' + project.hero + '</span>' +
+        '</div>';
+    }
+    return (
+      '<div class="project-figure' + (project.video ? ' has-video' : '') + '" data-slug="' + project.slug + '">' +
+        '<span class="media-index">' + (project.video ? 'MOTION / PLAY' : 'IMAGE / FULL FRAME') + '</span>' +
+        media +
+        (!project.video ? '<span class="view-full">View full frame ↗</span>' : '') +
+        '<span class="hover-note">' + (project.video ? 'Press play. I made this.' : 'Open full frame.') + '</span>' +
+      '</div>'
+    );
+  }
+
+  // Force-check placeholder immediately (avoid waiting on the image
+  // network error, which can flash a broken-image icon first).
+  function markMissingImages(root) {
+    var imgs = root.querySelectorAll(".project-figure img");
+    imgs.forEach(function (img) {
+      var testImg = new Image();
+      testImg.onerror = function () {
+        img.style.display = "none";
+        var ph = img.nextElementSibling;
+        if (ph) ph.style.display = "flex";
+      };
+      testImg.src = img.getAttribute("src");
+    });
+  }
+
+  function detailField(label, value) {
+    var f = fieldOrPlaceholder(value, label);
+    return (
+      '<div class="detail-field">' +
+        '<div class="label">' + label + '</div>' +
+        '<div class="value">' + (f.empty ? '<em>' + f.text + '</em>' : f.text) + '</div>' +
+      '</div>'
+    );
+  }
+
+  function projectCard(project, opts) {
+    opts = opts || {};
+    var titleF = fieldOrPlaceholder(project.title, "project title");
+    var descF = fieldOrPlaceholder(project.description, "description");
+    var toolsText = (project.tools && project.tools.length) ? project.tools.join(", ") : "";
+
+    var card =
+      '<article class="project-card" data-slug="' + project.slug + '" tabindex="0" role="button" aria-expanded="false">' +
+        figureMarkup(project) +
+        '<div class="project-meta">' +
+          '<span class="name serif">' + titleF.text + '</span>' +
+          '<span class="yr">' + (project.year || "&mdash;") + '</span>' +
+        '</div>' +
+        (opts.showDesc !== false ? '<p class="project-desc">' + descF.text + '</p>' : '') +
+        '<div class="project-detail">' +
+          '<p class="detail-q">&ldquo;What did you actually do?&rdquo;</p>' +
+          '<div class="detail-grid">' +
+            detailField("Role", project.role) +
+            detailField("Scope", project.scope) +
+            detailField("Approach", project.approach || project.description) +
+          '</div>' +
+          (toolsText ? '<p class="small-note" style="margin-bottom:1.5rem;">Tools &mdash; ' + toolsText + '</p>' : '') +
+          (project.client ? '<p class="small-note" style="margin-bottom:1.5rem;">Client &mdash; ' + project.client + '</p>' : '') +
+          (project.gallery && project.gallery.length
+            ? '<div class="detail-gallery">' + project.gallery.map(function (g) {
+                return '<div class="project-figure"><img src="' + g + '" alt="" loading="lazy"><div class="ph" style="display:none;"><span class="ph-label">Gallery image</span><span class="ph-path">' + g + '</span></div></div>';
+              }).join("") + '</div>'
+            : '') +
+        '</div>' +
+      '</article>';
+
+    return card;
+  }
+
+  function renderWork() {
+    var container = document.getElementById("category-container");
+    if (!container || typeof PROJECTS === "undefined") return;
+
+    var order = ["brand", "campaign", "digital", "motion"];
+    var featured = PROJECTS.filter(function (p) { return p.featured; });
+
+    var html = "";
+    order.forEach(function (cat) {
+      var items = featured.filter(function (p) { return p.category === cat; });
+      if (!items.length) return;
+      var intro = CATEGORY_INTROS[cat] || { question: "", sub: "" };
+      html +=
+        '<div class="category-block" id="cat-' + cat + '">' +
+          '<div class="wrap">' +
+            '<div class="category-head">' +
+              '<div>' +
+                '<span class="category-tag">' + CATEGORY_LABELS[cat] + '</span>' +
+                '<p class="q serif">' + intro.question + '</p>' +
+              '</div>' +
+              '<p class="sub">' + intro.sub + '</p>' +
+            '</div>' +
+            '<div class="project-grid">' +
+              items.map(function (p) { return projectCard(p); }).join("") +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+    markMissingImages(container);
+  }
+
+  function renderSelected() {
+    var grid = document.getElementById("selected-grid");
+    if (!grid || typeof PROJECTS === "undefined") return;
+    var items = PROJECTS.filter(function (p) { return !p.featured && p.category !== "ai"; });
+    grid.innerHTML = items.map(function (p) { return projectCard(p, { showDesc: false }); }).join("");
+    markMissingImages(grid);
+  }
+
+  function renderAI() {
+    var grid = document.getElementById("ai-grid");
+    if (!grid || typeof PROJECTS === "undefined") return;
+    var items = PROJECTS.filter(function (p) { return p.category === "ai"; });
+    grid.innerHTML = items.map(function (p) { return projectCard(p); }).join("");
+    markMissingImages(grid);
+  }
+
+  renderWork();
+  renderSelected();
+  renderAI();
+
+  /* ============================================================
+     PROJECT CARD EXPAND / COLLAPSE
+     ============================================================ */
+  document.addEventListener("click", function (e) {
+    var card = e.target.closest(".project-card");
+    if (!card) return;
+    var detail = card.querySelector(".project-detail");
+    if (!detail) return;
+    var isOpen = detail.classList.toggle("open");
+    card.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var card = e.target.closest(".project-card");
+    if (!card) return;
+    e.preventDefault();
+    card.click();
+  });
+
+  /* ============================================================
+     SMOOTH SCROLL FOR data-scroll LINKS
+     ============================================================ */
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest("[data-scroll]");
+    if (!link) return;
+    var targetId = link.getAttribute("href");
+    if (!targetId || targetId.charAt(0) !== "#") return;
+    var target = document.querySelector(targetId);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+
+    var track = link.getAttribute("data-track");
+    if (track === "curious") showToast("Fair enough. Let's keep it professional.");
+  });
+
+  /* ============================================================
+     NAV: scrolled state + scroll-spy for progress rail
+     ============================================================ */
+  var navEl = document.getElementById("site-nav");
+  var progressItems = Array.prototype.slice.call(document.querySelectorAll(".progress-item"));
+  var progressTargets = progressItems.map(function (btn) {
+    return document.querySelector(btn.getAttribute("data-target"));
+  });
+
+  progressItems.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var targetSel = btn.getAttribute("data-target");
+      var target = document.querySelector(targetSel);
+      if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    });
+  });
+
+  function onScroll() {
+    if (navEl) navEl.classList.toggle("scrolled", window.scrollY > 12);
+
+    var mid = window.scrollY + window.innerHeight * 0.35;
+    var activeIndex = 0;
+    progressTargets.forEach(function (el, i) {
+      if (el && el.offsetTop <= mid) activeIndex = i;
+    });
+    progressItems.forEach(function (btn, i) {
+      btn.classList.toggle("active", i === activeIndex);
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ============================================================
+     REVEAL ON SCROLL (single deliberate treatment)
+     ============================================================ */
+  function initReveal() {
+    var els = document.querySelectorAll(".project-figure, .fade");
+    if (!("IntersectionObserver" in window) || reduceMotion) {
+      els.forEach(function (el) { el.classList.add("reveal", "in"); });
+      return;
+    }
+    els.forEach(function (el) {
+      if (el.classList.contains("project-figure")) el.classList.add("reveal");
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".reveal, .fade").forEach(function (el) { io.observe(el); });
+  }
+  initReveal();
+
+  /* ============================================================
+     TYPED HEADLINE (one moment, on the first interview question)
+     ============================================================ */
+  function typeOnce() {
+    var el = document.querySelector("[data-type]");
+    if (!el || reduceMotion) {
+      if (el) el.classList.add("done");
+      return;
+    }
+    var full = el.textContent;
+    el.textContent = "";
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        var i = 0;
+        var interval = setInterval(function () {
+          i++;
+          el.textContent = full.slice(0, i);
+          if (i >= full.length) {
+            clearInterval(interval);
+            el.classList.add("done");
+          }
+        }, 28);
+      });
+    }, { threshold: 0.6 });
+    io.observe(el);
+  }
+  typeOnce();
+
+  /* ============================================================
+     EASTER EGG — cursor note on selected elements
+     ============================================================ */
+  var cursorNote = document.getElementById("cursor-note");
+  var noteTargets = document.querySelectorAll(".nav-mark, footer");
+  noteTargets.forEach(function (el) {
+    el.addEventListener("mouseenter", function () {
+      if (!cursorNote) return;
+      cursorNote.textContent = "This is a portfolio. Please behave.";
+      cursorNote.classList.add("show");
+    });
+    el.addEventListener("mousemove", function (e) {
+      if (!cursorNote) return;
+      cursorNote.style.left = e.clientX + "px";
+      cursorNote.style.top = e.clientY + "px";
+    });
+    el.addEventListener("mouseleave", function () {
+      if (cursorNote) cursorNote.classList.remove("show");
+    });
+  });
+
+  /* ============================================================
+     EASTER EGG — Cmd/Ctrl+Z
+     ============================================================ */
+  window.addEventListener("keydown", function (e) {
+    var isUndo = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z";
+    if (!isUndo) return;
+    showToast("Nice try.");
+  });
+
+  var toastTimer = null;
+  function showToast(message) {
+    var toast = document.getElementById("toast");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2200);
+  }
+
+  /* ============================================================
+     TOOLKIT — small live status line, no interaction required
+     ============================================================ */
+  var toolStatus = document.getElementById("tool-status");
+  if (toolStatus && !reduceMotion) {
+    var statuses = [
+      "No plugins required.",
+      "Layers are behaving.",
+      "Brief understood. Suspiciously clear.",
+      "Export settings checked.",
+      "One last revision. Probably."
+    ];
+    var statusIndex = 0;
+    setInterval(function(){
+      statusIndex = (statusIndex + 1) % statuses.length;
+      toolStatus.style.opacity = "0";
+      setTimeout(function(){
+        toolStatus.textContent = statuses[statusIndex];
+        toolStatus.style.opacity = "1";
+      }, 160);
+    }, 3200);
+    toolStatus.style.transition = "opacity 160ms ease";
+  }
+
+  /* ============================================================
+     FOOTER YEAR
+     ============================================================ */
+  var yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+})();
+
+
+/* ============================================================
+   V9 — MICRO INTERACTIONS
+   ============================================================ */
+(function(){
+  if (reduceMotion) return;
+
+  /* Scroll progress becomes a tiny blue signal in the browser tab-like rail. */
+  var rail=document.getElementById("progress-rail");
+  if(rail){
+    window.addEventListener("scroll",function(){
+      var max=document.documentElement.scrollHeight-window.innerHeight;
+      var pct=max>0 ? window.scrollY/max : 0;
+      rail.style.setProperty("--scroll-progress",(pct*100)+"%");
+    },{passive:true});
+  }
+
+  /* Cursor notes: small, occasional, context-aware — never constant noise. */
+  var note=document.getElementById("cursor-note");
+  var phrases=["Move 2px →","Good. Leave it.","Hierarchy checked.","Client said: 'make it pop.'","Yes, that's intentional.","One more revision.","Saved. Probably."];
+  var last=0;
+  document.addEventListener("mousemove",function(e){
+    if(!note || window.innerWidth<900) return;
+    note.style.left=e.clientX+"px";
+    note.style.top=e.clientY+"px";
+    var now=Date.now();
+    if(now-last>2600 && Math.random()<.018){
+      note.textContent=phrases[Math.floor(Math.random()*phrases.length)];
+      note.classList.add("show");
+      last=now;
+      setTimeout(function(){note.classList.remove("show")},900);
+    }
+  },{passive:true});
+
+  /* Gentle parallax on the intro name/role, capped so it never becomes distracting. */
+  var intro=document.getElementById("intro");
+  if(intro){
+    var name=intro.querySelector(".intro-sub");
+    window.addEventListener("scroll",function(){
+      if(window.scrollY<window.innerHeight && name){
+        name.style.transform="translateY("+Math.min(window.scrollY*.08,24)+"px)";
+      }
+    },{passive:true});
+  }
+
+  /* Give project figures a directional reveal when entering the viewport. */
+  var figures=document.querySelectorAll(".project-figure");
+  var figIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add("figure-in");
+        figIO.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12});
+  figures.forEach(function(f){figIO.observe(f)});
+
+  /* Clickable personality cards get a tiny acknowledgement. */
+  document.querySelectorAll(".quip").forEach(function(card){
+    card.addEventListener("click",function(){
+      var toast=document.getElementById("toast");
+      if(!toast) return;
+      toast.textContent="Answer recorded. Very professional.";
+      toast.classList.add("show");
+      setTimeout(function(){toast.classList.remove("show")},1300);
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
